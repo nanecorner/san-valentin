@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Allison ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #ffe6ea;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
+      padding: 16px;
+      color: #1f1f1f;
+    }
+
+    .stage {
+      width: 95vw;
+      max-width: 640px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, .75);
+      border: 1px solid rgba(0, 0, 0, .08);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .10);
+      padding: 18px 18px 14px;
+      backdrop-filter: blur(6px);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      font-size: 16px;
+      opacity: .9;
+    }
+
+    .buttons {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 22px;
+      font-size: 18px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .10);
+    }
+
+    #si {
+      background: #ff4d6d;
+      color: #fff;
+    }
+
+    #no {
+      background: #cfcfcf;
+      color: #111;
+    }
+
+    .small {
+      font-size: 13px;
+      opacity: .7;
+      margin-top: 10px;
+    }
+
+    /* Fotos (sin animación) */
+    .gallery {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 2px solid rgba(255, 255, 255, .9);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, .12);
+      background: rgba(255, 255, 255, .6);
+    }
+
+    @media (max-width:520px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .plan {
+      margin-top: 14px;
+      text-align: left;
+      background: rgba(255, 255, 255, .70);
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(0, 0, 0, .06);
+    }
+
+    .plan h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .plan ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .plan li {
+      margin: 8px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 77, 109, .15);
+      border: 1px solid rgba(255, 77, 109, .25);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stage">
+    <div class="card" id="screen">
+      <div class="badge">Para Allison 💌</div>
+      <h1>¿Quieres ser mi San Valentín, Allison? ❤️</h1>
+      <p>
+        No necesito un día especial para quererte… pero sí quiero que el <b>14/02</b>
+        sea nuestro, aunque sea a distancia.
+      </p>
+
+      <div class="buttons">
+        <button id="si" class="btn">Sí 💘</button>
+        <button id="no" class="btn">No 😅</button>
+      </div>
+
+      <div class="small">Tip: si presionas “No”, te voy a insistir tantito 😌</div>
+    </div>
+  </div>
+
+  <script>
+    // ====== CONFIG FOTOS ======
+    // OPCIÓN B (RECOMENDADA): usa URLs públicas
+    // - Sube fotos a Google Drive/Imgur/Dropbox/tu hosting y pega aquí los links directos.
+    // - Deben terminar en .jpg/.png o ser un link directo a imagen.
+    const fotos = [
+      // Ejemplos (reemplaza):
+      // "https://tusitio.com/fotos/1.jpg",
+      // "https://tusitio.com/fotos/2.jpg",
+      // "https://tusitio.com/fotos/3.jpg",
+      // "https://tusitio.com/fotos/4.jpg",
+      // "https://tusitio.com/fotos/5.jpg",
+      // "https://tusitio.com/fotos/6.jpg"
+    ];
+
+    // Frases únicas 1..35 (sin animación)
+    const frases = [
+      "¿Segura? 🤨",
+      "Piénsalo bien 🧐",
+      "Neta me vas a hacer rogarte? Va 👀",
+      "Respuesta incorrecta 😏",
+      "Reintenta por favor 🔁",
+      "Sistema no acepta ese valor 🤖",
+      "Esto ya es puro trámite 😌",
+      "Try again 😌",
+      "Error de usuario 😅",
+      "Te estás equivocando bonito 💘",
+      "No es la respuesta esperada 📋",
+      "Consulta inválida 😎",
+      "¿Revisamos otra vez? 📝",
+      "No autorizado 🚫",
+      "Eso no está permitido 😌",
+      "Respuesta rechazada 💌",
+      "No pasa validación 🧪",
+      "No acepto un no por respuesta 📜",
+      "Te recuerdo que te amo 😄",
+      "No es negociable 😌",
+      "Eso no cambia el resultado 💘",
+      "Tu voto fue ignorado 😅",
+      "El destino dice sí 😏",
+      "El universo ya decidió ✨",
+      "Ya vamos muy lejos para decir no 😌",
+      "Te estás tardando 😄",
+      "Eso fue intento fallido 🧱",
+      "Ajá… ajá… pero yo ya te escogí 😌",
+      "Solicitud ignorada con éxito 😄",
+      "Ya casi te convences, lo sé 😏",
+      "Hazlo por mí (y por el 14/02) 💌",
+      "Ok, última vez que pregunto… (mentira) 😅",
+      "Allison… porfa 🥺",
+      "Te prometo una cita bonita 😌",
+      "Dale “Sí” y te explico el plan 💘"
+    ];
+
+    const especiales = {
+      7: "No sé para qué te haces si hasta nos vamos a casar 💍",
+      14: "Recuerda que la puerta tiene ladrillos 🧱😈",
+      21: "Eso no coincide con mi futuro contigo 💍",
+      28: "Tú eres mía y yo tuyo… ¿puedes cooperar? 😏",
+      35: "Última oportunidad de rendirte 😄"
+    };
+
+    const noBtn = document.getElementById("no");
+    const siBtn = document.getElementById("si");
+    const screen = document.getElementById("screen");
+
+    let c = 0;        // clicks en NO
+    let shrink = 0;   // 5 pasos de encogido (solo lógica, sin animación)
+    let noGone = false;
+
+    function handleNo(e) {
+      if (e) e.preventDefault();
+      if (noGone) return;
+
+      c++;
+
+      // Clicks 1..35
+      if (c <= 35) {
+        if (especiales[c]) {
+          noBtn.textContent = especiales[c];
+        } else {
+          // frases únicas, índice = c-1
+          noBtn.textContent = frases[c - 1] || "No funciona 😌";
+        }
+        return;
+      }
+
+      // Click 36
+      if (c === 36) {
+        noBtn.textContent = "Me obligaste a esto 😤";
+        noBtn.style.background = "#ff4d6d";
+        noBtn.style.color = "white";
+        return;
+      }
+
+      // Clicks 37..41 (5 pasos) -> se encoge (sin animación)
+      if (c >= 37 && c <= 41) {
+        shrink++;
+        const scale = Math.max(0.15, 1 - shrink * 0.18);
+        noBtn.style.transform = `scale(${scale})`;
+
+        if (shrink >= 5) {
+          noBtn.style.display = "none";
+          noGone = true;
+        }
+        return;
+      }
+    }
+
+    function renderFotos() {
+      if (!fotos.length) {
+        return `
+        <div class="small">
+          ⚠️ Aún no hay fotos configuradas.  
+          En el código, agrega URLs directas al arreglo <b>fotos</b>.
+        </div>
+      `;
+      }
+
+      const items = fotos.slice(0, 6).map((src) =>
+        `<img class="photo" src="${src}" alt="Foto de nosotros" />`
+      ).join("");
+
+      return `<div class="gallery">${items}</div>`;
+    }
+
+    function showFinal() {
+      screen.innerHTML = `
+      <div class="badge">14/02 — Nuestra cita a distancia 💌</div>
+      <h1>Allison… sabía que dirías que sí 😌❤️</h1>
+      <p>
+        Gracias por elegirme. Aunque no estemos en el mismo lugar,
+        yo te siento cerquita. Hoy es para nosotros.
+      </p>
+
+      ${renderFotos()}
+
+      <div class="plan">
+        <h3>Plan del 14/02/2026</h3>
+        <ul>
+          <li><b>Lugar:</b> FaceTime 📱</li>
+          <li><b>Actividades:</b> una cita linda, sin prisas 💞</li>
+          <li><b>Peli:</b> <i>Going the Distance</i> 🎬</li>
+          <li><b>Intimidad:</b> tiempo de preguntas (las pendientes de Insta que me mandaste), el reel que te mandé (cómo nos vemos el uno al otro y distintas pics), platicar sobre lo que hemos contestado en la app. 💬</li>
+          <li><b>Juegos:</b> Basta + Adivinando palabras 🎮</li>
+        </ul>
+      </div>
+
+      <p class="small">
+        Mensaje extra: prometo no discutir con tus “No”…
+        (pero ya vimos que no funcionan) 😄💘
+      </p>
+    `;
+    }
+
+    noBtn.addEventListener("click", handleNo);
+    noBtn.addEventListener("touchstart", handleNo, { passive: false });
+
+    siBtn.addEventListener("click", showFinal);
+    siBtn.addEventListener("touchstart", (e) => { e.preventDefault(); showFinal(); }, { passive: false });
+  </script>
+
+</body>
+
+</html>
